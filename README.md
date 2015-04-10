@@ -2,6 +2,8 @@
 
 Mange a csv file more easily.
 
+[![Build Status](https://travis-ci.org/osadake212/rcsv_loader.svg?branch=master)](https://travis-ci.org/osadake212/rcsv_loader)
+
 ## Usage
 
 Only 3 steps to start.
