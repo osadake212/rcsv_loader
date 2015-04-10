@@ -29,6 +29,10 @@ describe RCsvLoader do
           subject { row.file_name }
           it { is_expected.to eq expected[:first_row][:file_name] }
         end
+        describe "extension" do
+          subject { row.extension }
+          it { is_expected.to eq expected[:first_row][:extension] }
+        end
         describe "url" do
           subject { row.url }
           it { is_expected.to eq expected[:first_row][:url] }
@@ -61,6 +65,7 @@ describe RCsvLoader do
             :data_count => 1,
             :first_row  => {
               :file_name => "file_02.zip",
+              :extension => "zip",
               :url       => "https://example.com/file_02.zip"
             }
           }
@@ -73,6 +78,7 @@ describe RCsvLoader do
             :data_count => 1,
             :first_row  => {
               :file_name => "file_01.zip",
+              :extension => "zip",
               :url       => "https://example.com/file_01.zip"
             }
           }
@@ -105,6 +111,7 @@ describe RCsvLoader do
             :data_count => 2,
             :first_row  => {
               :file_name => "file_01.zip",
+              :extension => "zip",
               :url       => "https://example.com/file_01.zip"
             }
           }
@@ -117,6 +124,7 @@ describe RCsvLoader do
             :data_count => 1,
             :first_row  => {
               :file_name => "file_01.zip",
+              :extension => "zip",
               :url       => "https://example.com/file_01.zip"
             }
           }
