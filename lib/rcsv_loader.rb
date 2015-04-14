@@ -65,14 +65,16 @@ module RCsvLoader
       return @rows if params.empty?
 
       # filter the conditions.
-      params.select! do |k, v|
-        self.class.headers.keys.any? { |key| key.to_s == k.to_s }
-      end
+      p = params.select do |k, v|
+            self.class.headers.keys.any? { |key| key.to_s == k.to_s }
+          end
 
-      return [] if params.empty?
+      return [] if p.empty?
 
-      @rows.select do |row|
-        params.all? { |attr, con| (row.send attr) == con }
+      if params[:__regexp__]
+        @rows.select { |row| p.all? { |attr, con| (row.send attr).match con } }
+      else
+        @rows.select { |row| p.all? { |attr, con| (row.send attr) == con } }
       end
 
     end

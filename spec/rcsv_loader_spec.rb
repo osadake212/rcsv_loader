@@ -84,6 +84,19 @@ describe RCsvLoader do
           }
           it_behaves_like "where", expected
         end
+
+        context ':__regexp__ => true, :file_name => ".*?\.zip"' do
+          let(:results) { sample.where( { :__regexp__ => true, :file_name => ".*?\.zip" }) }
+          expected = {
+            :data_count => 2,
+            :first_row  => {
+              :file_name => "file_01.zip",
+              :extension => "zip",
+              :url       => "https://example.com/file_01.zip"
+            }
+          }
+          it_behaves_like "where", expected
+        end
       end
     end
 
@@ -130,6 +143,20 @@ describe RCsvLoader do
           }
           it_behaves_like "where", expected
         end
+
+        context ':__regexp__ => true, :file_name => ".*?\.zip"' do
+          let(:results) { sample.where( { :__regexp__ => true, :file_name => ".*?\.zip" }) }
+          expected = {
+            :data_count => 2,
+            :first_row  => {
+              :file_name => "file_01.zip",
+              :extension => "zip",
+              :url       => "https://example.com/file_01.zip"
+            }
+          }
+          it_behaves_like "where", expected
+        end
+
       end
 
     end
