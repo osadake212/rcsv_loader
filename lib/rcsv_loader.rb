@@ -59,22 +59,26 @@ module RCsvLoader
     #
     # compare with '=='
     #
+    # options = {
+    #   :regexp => true
+    # }
+    #
     # return empty array if the condition is invalid or couldn't find any rows.
     #
-    def where params = {}
-      return @rows if params.empty?
+    def where conditions = {}, options = {}
+      return @rows if conditions.empty?
 
       # filter the conditions.
-      p = params.select do |k, v|
+      c = conditions.select do |k, v|
             self.class.headers.keys.any? { |key| key.to_s == k.to_s }
           end
 
-      return [] if p.empty?
+      return [] if c.empty?
 
-      if params[:__regexp__]
-        @rows.select { |row| p.all? { |attr, con| (row.send attr).match con } }
+      if options[:regexp]
+        where_with_regexp c
       else
-        @rows.select { |row| p.all? { |attr, con| (row.send attr) == con } }
+        @rows.select { |row| c.all? { |attr, con| (row.send attr) == con } }
       end
 
     end
@@ -91,6 +95,17 @@ module RCsvLoader
       csv += CSV.generate_line(self.class.headers.map { |k, v| v } ) if options[:headers]
       csv += @rows.map(&:to_csv).join
     end
+
+    private
+
+    #
+    # evaluate expression with #match
+    #
+    def where_with_regexp conditions = {}
+      return @rows if conditions.empty?
+      @rows.select { |row| conditions.all? { |attr, con| (row.send attr).match con } }
+    end
+
   end
 
   private

@@ -85,8 +85,8 @@ describe RCsvLoader do
           it_behaves_like "where", expected
         end
 
-        context ':__regexp__ => true, :file_name => ".*?\.zip"' do
-          let(:results) { sample.where( { :__regexp__ => true, :file_name => ".*?\.zip" }) }
+        context ':regexp => true, :file_name => ".*?\.zip"' do
+          let(:results) { sample.where( { :file_name => ".*?\.zip" }, :regexp => true) }
           expected = {
             :data_count => 2,
             :first_row  => {
@@ -144,8 +144,8 @@ describe RCsvLoader do
           it_behaves_like "where", expected
         end
 
-        context ':__regexp__ => true, :file_name => ".*?\.zip"' do
-          let(:results) { sample.where( { :__regexp__ => true, :file_name => ".*?\.zip" }) }
+        context ':regexp => true, :file_name => ".*?\.zip"' do
+          let(:results) { sample.where( { :file_name => ".*?\.zip" }, :regexp => true) }
           expected = {
             :data_count => 2,
             :first_row  => {
