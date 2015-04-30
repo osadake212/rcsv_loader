@@ -1,12 +1,14 @@
-require 'active_support'
 require 'rcsv_loader/where'
 
 module RCsvLoader
   module Core
-    extend ActiveSupport::Concern
     extend Forwardable
 
     include Where
+
+    def self.included base
+      base.extend ClassMethods
+    end
 
     module ClassMethods
       #
