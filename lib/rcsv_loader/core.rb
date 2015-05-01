@@ -112,7 +112,7 @@ module RCsvLoader
     #
     def to_csv options = {}
       csv = ""
-      csv += CSV.generate_line(self.class.headers.map { |k, v| v } ) unless options[:headers]
+      csv += CSV.generate_line(self.class.headers.map { |k, v| v } ) if options[:headers].nil? or options[:headers]
       csv += @rows.map(&:to_csv).join
     end
 
