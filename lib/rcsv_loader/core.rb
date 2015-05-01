@@ -35,6 +35,8 @@ module RCsvLoader
         @headers = all_headers
         @headers.merge!(alias_name => column_name)
         define_row(@headers)
+
+        @has_headers = true
       end
 
       #
@@ -43,6 +45,12 @@ module RCsvLoader
       def insert_headers headers = []
         @headers = Hash[headers.map.with_index { |e, i| [e, i] }]
         define_row(@headers)
+
+        @has_headers = false
+      end
+
+      def headers?
+        !!@has_headers
       end
 
       private
@@ -112,8 +120,17 @@ module RCsvLoader
     #
     def to_csv options = {}
       csv = ""
-      csv += CSV.generate_line(self.class.headers.map { |k, v| v } ) if options[:headers].nil? or options[:headers]
+      csv += header_line if options[:headers].nil? or options[:headers]
       csv += @rows.map(&:to_csv).join
+    end
+
+    private
+
+    #
+    # generate header line
+    #
+    def header_line
+      CSV.generate_line(self.class.headers.map { |k, v| self.class.headers? ? v.to_s : k.to_s })
     end
 
   end
